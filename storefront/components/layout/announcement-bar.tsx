@@ -1,24 +1,32 @@
 'use client'
 
-import { useState } from 'react'
-import { X } from 'lucide-react'
+import { Mail, Truck } from 'lucide-react'
 
+/**
+ * Top utility strip — dark teal greeting bar with support email and order tracking.
+ * Inspired by the small-brand pattern of opening with a warm greeting before the header.
+ */
 export default function AnnouncementBar() {
-  const [isVisible, setIsVisible] = useState(true)
-
-  if (!isVisible) return null
-
   return (
-    <div className="relative bg-foreground text-primary-foreground">
-      <div className="container-custom flex items-center justify-center py-2.5 text-sm tracking-wide">
-        <p>Free shipping on orders over $75 — Shop the new collection</p>
-        <button
-          onClick={() => setIsVisible(false)}
-          className="absolute right-4 p-1 hover:opacity-70 transition-opacity"
-          aria-label="Dismiss announcement"
+    <div className="bg-teal-deep text-primary-foreground text-xs">
+      <div className="container-custom flex items-center justify-between gap-4 py-2">
+        <a
+          href="mailto:support@store.com"
+          className="hidden sm:flex items-center gap-2 hover:opacity-80 transition-opacity uppercase tracking-wider"
         >
-          <X className="h-3.5 w-3.5" />
-        </button>
+          <Mail className="h-3.5 w-3.5" />
+          support@store.com
+        </a>
+        <p className="flex-1 text-center uppercase tracking-[0.18em] font-medium">
+          Welcome — Free shipping over $75
+        </p>
+        <a
+          href="/account/orders"
+          className="hidden sm:flex items-center gap-2 hover:opacity-80 transition-opacity uppercase tracking-wider"
+        >
+          <Truck className="h-3.5 w-3.5" />
+          Track Order
+        </a>
       </div>
     </div>
   )

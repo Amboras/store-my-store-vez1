@@ -5,6 +5,7 @@ import { Providers } from './providers'
 import Header from '@/components/layout/header'
 import Footer from '@/components/layout/footer'
 import AnnouncementBar from '@/components/layout/announcement-bar'
+import TrustBar from '@/components/layout/trust-bar'
 import { AnalyticsProvider } from '@/components/analytics-provider'
 import { MetaPixelProvider } from '@/components/meta-pixel-provider'
 import { Toaster } from 'sonner'
@@ -81,6 +82,7 @@ export default function RootLayout({
           <ElementPickerListener />
           <AnnouncementBar />
           <Header />
+          <TrustBar />
           <main className="min-h-screen">
             <ErrorBoundary>
               <AnalyticsProvider>
