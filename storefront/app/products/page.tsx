@@ -12,14 +12,27 @@ export default function ProductsPage() {
   const [showFilters, setShowFilters] = useState(false)
 
   const { data: categories, isLoading: loadingCategories } = useQuery({
-    queryKey: ['categories'],
+    queryKey: ['categories-tree'],
     queryFn: async () => {
-      const response = await getMedusaClient().store.category.list({ limit: 100 })
+      const response = await getMedusaClient().store.category.list({
+        limit: 100,
+        include_descendants_tree: true,
+        parent_category_id: 'null',
+        fields: 'id,name,handle,parent_category_id,category_children.id,category_children.name,category_children.handle',
+      } as any)
       return response.product_categories
     },
   })
 
-  const allCategories = categories || []
+  // Flatten the tree into [{ category, depth }] so we can render with indentation
+  const flatCategories: Array<{ id: string; name: string; depth: number }> = []
+  const walk = (nodes: any[], depth: number) => {
+    for (const node of nodes || []) {
+      flatCategories.push({ id: node.id, name: node.name, depth })
+      if (node.category_children?.length) walk(node.category_children, depth + 1)
+    }
+  }
+  walk(categories || [], 0)
 
   return (
     <>
@@ -82,16 +95,18 @@ export default function ProductsPage() {
                     >
                       All Products
                     </button>
-                    {allCategories.map((category: any) => (
+                    {flatCategories.map((category) => (
                       <button
                         key={category.id}
                         onClick={() => setSelectedCategory(category.id)}
+                        style={{ paddingLeft: `${category.depth * 12}px` }}
                         className={`block w-full text-left py-1.5 text-sm transition-colors ${
                           selectedCategory === category.id
                             ? 'font-semibold text-foreground'
                             : 'text-muted-foreground hover:text-foreground'
                         }`}
                       >
+                        {category.depth > 0 && <span className="text-muted-foreground/60 mr-1.5">└</span>}
                         {category.name}
                       </button>
                     ))}
