@@ -81,13 +81,14 @@ export default function Header() {
             </button>
 
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2" aria-label="Home">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://ahjviugsxpwzpkyzgrhi.supabase.co/storage/v1/object/public/product-user-files/5abb7af0-ca5c-4305-9e7f-641b8f3a6ef0%2Fai-logo-1777617338442-0-01KQH4005KQ557Q8WE2WEPKJB4.png"
-                alt="Store logo"
-                className="h-9 w-auto sm:h-10 object-contain"
-              />
+            <Link
+              href="/"
+              className="flex items-center"
+              aria-label="Home"
+            >
+              <span className="font-heading text-2xl sm:text-[28px] font-medium tracking-[0.02em] text-foreground leading-none">
+                My Store
+              </span>
             </Link>
 
             {/* Desktop Navigation */}
